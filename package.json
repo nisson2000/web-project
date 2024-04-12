@@ -8,5 +8,8 @@
     "start": "cd backend && yarn start",
     "build": "cd frontend && yarn && yarn build",
     "install:all": "cd frontend && yarn install --production=false && cd ../backend && yarn"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
   }
 }
