@@ -2,6 +2,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import logo from '../assets/react.svg';
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -186,7 +187,7 @@ export function RootIndex() {
       </div>
       <div className="flex justify-center">
         <a href="https://youtu.be/dQw4w9WgXcQ" target="_blank">
-          <img src="/vite.svg" className="w-52 logo" />
+          <img src={logo} className="w-52 logo" />
         </a>
       </div>
     </div>
