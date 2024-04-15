@@ -186,6 +186,7 @@ export function RootIndex() {
         <h1 className="text-4xl block">Welcome</h1>
       </div>
       <div className="flex justify-center">
+        <a target="_blank">
           <img src={logo} className="w-52 logo" />
         </a>
       </div>
