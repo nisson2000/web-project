@@ -30,7 +30,9 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+], {
+  basename: '/web_project/',  // Set the base path for all routes
+});
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
