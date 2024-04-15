@@ -15,7 +15,7 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "glob": "^10.3.12",
-    "prisma": "^4.11.0"
+    "prisma": "^5.12.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.21"
