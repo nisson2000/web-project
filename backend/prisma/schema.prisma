@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("postgres://mlulwbyw:mRpfhBvFsAMv-4auDo8iHTW2aXJ9irmU@floppy.db.elephantsql.com/mlulwbyw")
+  url      = env("postgres://upbiqnfn72f2h:p6ed8dbd928b73b223792f5fef0ea07a34d6b3a75262f68e241e5bb82f1fe76ae@c7gljno857ucsl.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/dbnujn8iui9i4k")
 }
 
 model User {
