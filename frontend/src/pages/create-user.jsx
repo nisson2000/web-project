@@ -4,7 +4,11 @@ import services from "../services";
 
 // you should design your register page and api
 function CreateUserPage() {
-  const [formData, setFormData] = useState({ username: "" });
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+    avatar: null, // 這裡存放用戶選擇的頭貼文件
+  });
   const [message, setMessage] = useState("");
 
   /** @type {React.ChangeEventHandler<HTMLInputElement>} */
@@ -17,13 +21,42 @@ function CreateUserPage() {
     }));
   };
 
+  /** @type {React.ChangeEventHandler<HTMLInputElement>} */
+  const handleFileChange = ({ target: { files } }) => {
+    if (files.length > 0) {
+      setFormData((prev) => ({
+        ...prev,
+        avatar: files[0],  // 假設只處理一個文件
+      }));
+    }
+  };
+
+
   /** @type {React.FormEventHandler<HTMLFormElement>} */
   const handleFormSubmit = (event) => {
-    services.user.createOne({ name: formData.username }).then((data) => {
+    /*services.user.createOne({ name: formData.username }).then((data) => {
       setMessage(JSON.stringify(data, null, 2));
     });
     setFormData({ username: "" });
+    event.preventDefault();*/
+
     event.preventDefault();
+    // 創建 FormData 對象以便發送文件數據
+    const formDataToSubmit = new FormData();
+    formDataToSubmit.append('username', formData.username);
+    formDataToSubmit.append('password', formData.password);
+    if (formData.avatar) {
+      formDataToSubmit.append('avatar', formData.avatar);
+    }
+
+    // 使用服務函數發送數據
+    try {
+      const data = await services.user.createOne(formDataToSubmit);
+      setMessage(JSON.stringify(data, null, 2));
+      setFormData({ username: "", password: "", avatar: null });
+    } catch (error) {
+      setMessage('Error: ' + error.message);
+    }
   };
 
   return (
@@ -39,47 +72,25 @@ function CreateUserPage() {
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>
-            <img
-              className="mx-auto h-12 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="Your Company"
-            />
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
               Create an account
             </h2>
           </div>
-          <form className="mt-8 space-y-6" onSubmit={handleFormSubmit}>
-            <div className="-space-y-px rounded-md shadow-sm">
-              <div>
-                <label htmlFor="username" className="sr-only">
-                  Username
-                </label>
-                <input
-                  name="username"
-                  type="text"
-                  required
-                  className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  placeholder="Username"
-                  value={formData.username}
-                  onChange={handleTextInputChange}
-                />
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                  <LockClosedIcon
-                    className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                    aria-hidden="true"
-                  />
-                </span>
-                Create
-              </button>
-            </div>
+          <form onSubmit={handleFormSubmit}>
+            <label>
+              Username:
+              <input type="text" name="username" value={formData.username} onChange={handleTextInputChange} />
+            </label>
+            <label>
+              Password:
+              <input type="password" name="password" value={formData.password} onChange={handleTextInputChange} />
+            </label>
+            <label>
+              Upload Avatar (JPG, PNG):
+              <input type="file" accept=".jpg, .jpeg, .png" onChange={handleFileChange} />
+            </label>
+            <button type="submit">Register</button>
+            <pre>{message}</pre>
           </form>
         </div>
       </div>
