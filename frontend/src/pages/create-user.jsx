@@ -33,7 +33,7 @@ function CreateUserPage() {
 
 
   /** @type {React.FormEventHandler<HTMLFormElement>} */
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     /*services.user.createOne({ name: formData.username }).then((data) => {
       setMessage(JSON.stringify(data, null, 2));
     });
